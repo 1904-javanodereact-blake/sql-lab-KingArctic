@@ -103,18 +103,39 @@ SELECT * FROM track WHERE unitprice in (SELECT MAX(unitprice) FROM track);
 -- 7.1 INNER
 -- Task – Create an inner join that joins customers and orders and specifies the name of the customer and the invoiceId.
 
+SELECT customer.firstname, customer.lastname, invoice.invoiceid
+FROM customer 
+INNER JOIN invoice
+ON customer.customerid = invoice.customerid
+ORDER BY customer.customerid;
 
 -- 7.2 OUTER
 -- Task – Create an outer join that joins the customer and invoice table, specifying the CustomerId, firstname, lastname, invoiceId, and total.
 
+SELECT customer.customerid, customer.firstname, customer.lastname, invoice.invoiceid, invoice.total
+FROM customer
+FULL OUTER JOIN invoice
+ON customer.customerid = invoice.customerid
+ORDER BY customer.customerid ASC;
 
 -- 7.3 RIGHT
 -- Task – Create a right join that joins album and artist specifying artist name and title.
 
+SELECT artist.name, album.title
+FROM album
+RIGHT JOIN artist
+ON album.artistid = artist.artistid;
 
 -- 7.4 CROSS
 -- Task – Create a cross join that joins album and artist and sorts by artist name in ascending order.
 
+SELECT * FROM artist
+CROSS JOIN album
+ORDER BY name ASC;
 
 -- 7.5 SELF
 -- Task – Perform a self-join on the employee table, joining on the reportsto column.
+
+SELECT E.employeeid, E.firstname, E.lastname, M.firstname AS reportsto
+FROM employee E, employee M
+WHERE E.reportsto = M.employeeid;
